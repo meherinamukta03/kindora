@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function CreateEventPage() {
   return (
-    <AuthGate>
+    //<AuthGate>
     <PageContainer className="py-14 sm:py-16">
       <div className="mx-auto max-w-3xl">
         <div className="mb-10 text-center">
@@ -31,6 +31,6 @@ export default function CreateEventPage() {
         </div>
       </div>
     </PageContainer>
-    </AuthGate>
+    //</AuthGate>
   );
 }

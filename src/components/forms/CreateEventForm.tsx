@@ -11,9 +11,17 @@ import Select from "@/components/ui/Select";
 import Textarea from "@/components/ui/Textarea";
 import FieldHint from "@/components/ui/FieldHint";
 
-/** Event creation form — design only; no backend submission. */
 export default function CreateEventForm() {
   const formRef = useRef<HTMLFormElement>(null);
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const minDate = [
+    tomorrow.getFullYear(),
+    String(tomorrow.getMonth() + 1).padStart(2, "0"),
+    String(tomorrow.getDate()).padStart(2, "0"),
+  ].join("-");
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
@@ -32,21 +40,23 @@ export default function CreateEventForm() {
         <Input
           id="event-title"
           type="text"
-          placeholder="e.g. Riverside Cleanup Mission"
+          placeholder="e.g. Clean Dhaka, Green Bangladesh"
           required
         />
-        <FieldHint>Keep it short and specific — up to 70 characters.</FieldHint>
+        <FieldHint>
+          Keep it short and specific — up to 70 characters.
+        </FieldHint>
       </div>
 
       <div>
         <Label htmlFor="event-description">Description</Label>
         <Textarea
           id="event-description"
-          placeholder="What will volunteers do? What should they bring? What impact will the event make?"
+          placeholder="Describe your event, volunteer activities and what participants should bring..."
           required
         />
         <FieldHint>
-          Include the plan, the preparation needed and the expected outcome.
+          Include the plan, preparation needed and expected outcome.
         </FieldHint>
       </div>
 
@@ -62,7 +72,9 @@ export default function CreateEventForm() {
           <option value="Education">Education</option>
           <option value="Health">Health</option>
         </Select>
-        <FieldHint>Choose the category that best fits the activity.</FieldHint>
+        <FieldHint>
+          Choose the category that best fits the activity.
+        </FieldHint>
       </div>
 
       <div>
@@ -70,10 +82,12 @@ export default function CreateEventForm() {
         <Input
           id="event-thumbnail"
           type="url"
-          placeholder="Event image link (optional)"
+          placeholder="https://example.com/event-image.jpg"
           required
         />
-        <FieldHint>Use a landscape photo — cards crop to 16:10.</FieldHint>
+        <FieldHint>
+          Use a landscape photo — cards crop to 16:10.
+        </FieldHint>
       </div>
 
       <div className="grid gap-6 sm:grid-cols-2">
@@ -82,26 +96,47 @@ export default function CreateEventForm() {
           <Input
             id="event-location"
             type="text"
-            placeholder="e.g. City Park, Badshahi Road, Lahore"
+            placeholder="e.g. TSC, Dhaka University, Dhaka"
             required
           />
-          <FieldHint>Include the area or landmark volunteers will look for.</FieldHint>
+          <FieldHint>
+            Include the area or landmark volunteers will look for.
+          </FieldHint>
         </div>
+
         <div>
           <Label htmlFor="event-date">Event Date</Label>
-          <Input id="event-date" type="date" required />
-          <FieldHint>Volunteers will see the exact date on the event card.</FieldHint>
+          <Input
+            id="event-date"
+            type="date"
+            min={minDate}
+            required
+          />
+          <FieldHint>
+            Only future dates are allowed.
+          </FieldHint>
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-3 border-t border-border pt-6">
-        <Button type="submit" variant="primary" size="lg">
-          <FontAwesomeIcon icon={faCirclePlus} className="h-4 w-4" />
-          Submit Event
-        </Button>
-        <Button type="button" variant="outline" size="lg" onClick={handleClear}>
+      <div className="flex items-center justify-between gap-3 border-t border-border pt-6">
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          onClick={handleClear}
+        >
           <FontAwesomeIcon icon={faRotateLeft} className="h-4 w-4" />
           Clear Form
+        </Button>
+
+        <Button
+          type="submit"
+          variant="outline"
+          size="lg"
+          className="border-2 border-primary"
+        >
+          <FontAwesomeIcon icon={faCirclePlus} className="h-4 w-4" />
+          Submit Event
         </Button>
       </div>
     </form>
