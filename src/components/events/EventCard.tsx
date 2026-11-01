@@ -30,8 +30,13 @@ export default function EventCard({ event }: { event: Event }) {
         ) : null}
         <div className="absolute top-3 left-3">
           <Badge className="bg-white/90 shadow-sm dark:bg-white/90 dark:text-forest">
-            <FontAwesomeIcon icon={typeIcons[event.type]} className="h-3 w-3" />
-            {event.type}
+
+            <FontAwesomeIcon
+              icon={typeIcons[event.category] || faLeaf}
+              className="h-3 w-3"
+            />
+            {event.category}
+
           </Badge>
         </div>
       </div>
@@ -44,17 +49,23 @@ export default function EventCard({ event }: { event: Event }) {
 
         <ul className="mb-4 space-y-1.5 text-sm text-charcoal-soft">
           <li className="flex items-center gap-2">
-            <FontAwesomeIcon icon={faLocationDot} className="h-3.5 w-3.5 shrink-0 text-accent" />
+            <FontAwesomeIcon
+              icon={faLocationDot}
+              className="h-3.5 w-3.5 shrink-0 text-forest dark:text-forest-light"
+            />
             <span className="line-clamp-1">{event.location}</span>
           </li>
           <li className="flex items-center gap-2">
-            <FontAwesomeIcon icon={faCalendarDays} className="h-3.5 w-3.5 shrink-0 text-accent" />
+            <FontAwesomeIcon
+              icon={faCalendarDays}
+              className="h-3.5 w-3.5 shrink-0 text-forest dark:text-forest-light"
+            />
             <span>{event.date}</span>
           </li>
         </ul>
 
         <Link
-          href={`/events/${event.id}`}
+          href={`/events/${event._id}`}
           className="mt-auto inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border-2 border-forest px-5 py-2 text-sm font-semibold text-forest transition-colors duration-200 hover:bg-forest hover:text-white dark:text-forest-light dark:hover:bg-forest-dark"
         >
           View Details

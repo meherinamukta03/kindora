@@ -6,14 +6,11 @@ export type EventType =
   | "Health";
 
 export interface Event {
-  id: string;
+  _id: string;
   title: string;
   description: string;
+  category: EventType;
   image: string;
-  type: EventType;
   location: string;
-  date: string; // human-readable date for static UI
-  organizer: string;
-  organizerTitle: string;
-  contactEmail: string;
+  date: string;
 }

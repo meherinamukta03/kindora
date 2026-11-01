@@ -5,7 +5,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import Providers from "@/components/shared/Providers";
 import { AuthProvider } from "@/components/shared/AuthProvider";
-
+import Script from "next/script";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -40,10 +40,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+    ><head>
+  <Script
+    id="theme-script"
+    strategy="beforeInteractive"
+    dangerouslySetInnerHTML={{ __html: themeScript }}
+  />
+</head>
       <body className="flex min-h-full flex-col">
         <AuthProvider>
           <Navbar />
