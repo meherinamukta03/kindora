@@ -87,8 +87,8 @@ export default async function EventDetailsPage({ params }: PageProps) {
         <div className="absolute bottom-0 left-0 p-6 sm:p-10">
           <div className="mx-auto w-full max-w-6xl">
             <Badge className="mb-3 bg-white/90 shadow-sm dark:bg-white/90 dark:text-forest">
-              <FontAwesomeIcon icon={typeIcons[event.type]} className="h-3 w-3" />
-              {event.type}
+              <FontAwesomeIcon icon={typeIcons[event.category]} className="h-3 w-3" />
+              {event.category}
             </Badge>
             <h1 className="max-w-3xl text-2xl font-extrabold text-white sm:text-4xl">
               {event.title}

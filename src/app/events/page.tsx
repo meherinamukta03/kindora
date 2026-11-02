@@ -9,6 +9,7 @@ import {
     faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import PageContainer from "@/components/shared/PageContainer";
+import Image from "next/image";
 
 interface Event {
     _id: string;
@@ -78,7 +79,7 @@ export default function ManagePage() {
                             >
                                 {/* Event Image */}
                                 <div className="h-52 overflow-hidden">
-                                    <img
+                                    <Image
                                         src={event.image}
                                         alt={event.title}
                                         className="h-full w-full object-cover"

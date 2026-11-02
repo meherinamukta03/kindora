@@ -13,14 +13,11 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import PageContainer from "./PageContainer";
-
 const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/upcoming-events", label: "Upcoming Events" },
-  { href: "/joined-events", label: "Joined Events" },
-  { href: "/create-event", label: "Create Event" },
-  { href: "/manage-events", label: "Manage Events" },
   { href: "/login", label: "Login" },
+  { href: "/register", label: "Register" },
 ];
 
 // TODO: Add your real social links later
@@ -85,18 +82,15 @@ export default function Footer() {
             <ul className="space-y-3 text-sm text-white/75">
               <li className="flex items-start gap-2.5">
                 <FontAwesomeIcon icon={faLocationDot} className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
-                <span>123 Community Lane, Gulberg III, Lahore, Pakistan</span>
+                
+                Gulshan-2, Dhaka, Bangladesh
               </li>
               <li className="flex items-center gap-2.5">
                 <FontAwesomeIcon icon={faEnvelope} className="h-4 w-4 shrink-0 text-accent" />
                 {/* TODO: mail link baad mein add karein */}
                 <span>hello@kindora.org</span>
               </li>
-              <li className="flex items-center gap-2.5">
-                <FontAwesomeIcon icon={faPhone} className="h-4 w-4 shrink-0 text-accent" />
-                {/* TODO: phone link baad mein add karein */}
-                <span>+92 300 123 4567</span>
-              </li>
+              
             </ul>
           </div>
 

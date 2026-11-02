@@ -65,11 +65,11 @@ export default function EventCard({ event }: { event: Event }) {
         </ul>
 
         <Link
-          href={`/events/${event._id}`}
+          href={`/upcoming-events/${event._id}`}
           className="mt-auto inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border-2 border-forest px-5 py-2 text-sm font-semibold text-forest transition-colors duration-200 hover:bg-forest hover:text-white dark:text-forest-light dark:hover:bg-forest-dark"
         >
           View Details
-        </Link>
+        </Link> 
       </div>
     </article>
   );
