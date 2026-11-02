@@ -6,9 +6,9 @@ import { Button } from "../ui/Button";
 import Link from "next/link";
 // import { Button } from "@base-ui/react/button";
 
-// TODO: apna hero image link baad mein add karein, e.g.
-// "https://images.unsplash.com/photo-1617896852726-5c9b4bdd8b19?w=1200&q=80&auto=format&fit=crop"
-const heroImage = "";
+
+
+
 
 /** Full-width hero banner for the Home page. */
 export default function HeroSection() {
@@ -41,16 +41,16 @@ export default function HeroSection() {
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">
-<Link href="/upcoming-events">
-            <Button variant="default" size="lg">
-              Explore Events
-            </Button>
+            <Link href="/upcoming-events">
+              <Button variant="default" size="lg">
+                Explore Events
+              </Button>
 
             </Link>
             <Link href="/register" >
-            <Button  variant="outline" size="lg">
-              Join Our Community
-            </Button></Link>
+              <Button variant="outline" size="lg">
+                Join Our Community
+              </Button></Link>
           </div>
 
           {/* Trust strip */}
@@ -75,27 +75,17 @@ export default function HeroSection() {
         {/* Image */}
         <div className="relative">
           <div className="relative aspect-4/3 overflow-hidden rounded-3xl shadow-xl ring-1 ring-black/5">
-              {heroImage ? (
-                <Image
-                  src={heroImage}
-                  alt="Volunteers working together to plant trees in their community"
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 50vw, 100vw"
-                  className="object-cover"
-                />
-              ) : null}
-            </div>
 
-          {/* Floating badge */}
-          <div className="absolute -bottom-6 left-6 rounded-2xl bg-card px-5 py-4 shadow-lg ring-1 ring-black/5 sm:left-10">
-            <p className="text-sm font-extrabold text-forest dark:text-forest-light">
-              This Week
-            </p>
-            <p className="text-xs font-medium text-charcoal-soft">
-              12 events · 3 new communities
-            </p>
-          </div>
+            <Image
+              src="/vitaly-gariev-_WOHOgkLw2M-unsplash.jpg"
+              alt="Volunteers working together in their community"
+              width={700}
+              height={500}
+              priority
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="h-[500px] w-full rounded-3xl object-cover"
+            /></div>
+
         </div>
       </div>
     </section>

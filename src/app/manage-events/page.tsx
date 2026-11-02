@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
- 
-  faCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import PageContainer from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import { Button } from "@/components/ui/Button";
-
+import ManageEventsGrid from "@/components/events/ManageEventsGrid";
 
 import Link from "next/link";
 
@@ -16,10 +13,8 @@ export const metadata: Metadata = {
   description: "Update or remove the community events you have created.",
 };
 
-
 export default function ManageEventsPage() {
   return (
-
     <>
       <PageHeader
         eyebrow="Organizer Dashboard"
@@ -28,17 +23,14 @@ export default function ManageEventsPage() {
       />
 
       <PageContainer className="py-14 sm:py-16">
-        {/* Summary */}
-
-
         {/* Header row */}
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <h2 className="text-xl font-bold text-charcoal dark:text-charcoal">
-            Your Events *
+            Your Events
           </h2>
           <Link href="/create-event">
             <Button
-              size="md"
+              size="lg"
               className="border border-forest px-6 py-3 text-base dark:border-forest-light"
             >
               <FontAwesomeIcon icon={faCirclePlus} className="h-5 w-5" />
@@ -47,9 +39,8 @@ export default function ManageEventsPage() {
           </Link>
         </div>
 
-
+        <ManageEventsGrid />
       </PageContainer>
     </>
-
   );
 }

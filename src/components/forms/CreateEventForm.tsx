@@ -15,6 +15,7 @@ import Label from "@/components/ui/Label";
 import Select from "@/components/ui/Select";
 import Textarea from "@/components/ui/Textarea";
 import FieldHint from "@/components/ui/FieldHint";
+import { useSession } from "@/lib/auth-client";
 
 export default function CreateEventForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -28,6 +29,32 @@ export default function CreateEventForm() {
     String(tomorrow.getMonth() + 1).padStart(2, "0"),
     String(tomorrow.getDate()).padStart(2, "0"),
   ].join("-");
+
+
+
+const {data:session ,isPending}=useSession()
+
+if(isPending){
+  return (
+<div className="flex justify-center items-center h-[85vh]">
+
+Loading
+
+</div>
+
+
+
+  )
+}
+
+const user=session?.user
+
+console.log("Logged in user:", user);
+console.log("User Email:", user?.email);
+
+
+
+
 
   // Submit form
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -44,7 +71,7 @@ export default function CreateEventForm() {
       headers: {
         "COntent-Type": "application/json"
       },
-      body: JSON.stringify(event)
+      body: JSON.stringify({ ...event, userEmail: user?.email }),
 
     })
 
@@ -204,7 +231,8 @@ export default function CreateEventForm() {
           type="submit"
           variant="outline"
           size="lg"
-          className="border-2 border-primary"
+        
+      className="border border-forest px-6 py-3 text-base dark:border-forest-light"
         >
           <FontAwesomeIcon
             icon={faCirclePlus}

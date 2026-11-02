@@ -8,14 +8,15 @@ export const metadata: Metadata = {
 };
 
 export default function RegisterPage() {
-  // TODO: apna auth image link baad mein add karein, e.g.
-  // "https://images.unsplash.com/photo-1593810450967-f9c42742e326?w=1200&q=80&auto=format&fit=crop"
   return (
     <AuthShell
-      image=""
-      imageAlt="Group of smiling volunteers in the community"
+      image="/camylla-battani-ABVE1cyT7hk-unsplash.jpg"
+      imageAlt="Kindora community volunteers working together"
       title="Create Your Account"
-      subtitle="Join Kindora and start making a difference today."
+      subtitle="Join Kindora and become part of a community that makes a positive difference."
+      panelEyebrow="Together We Make a Difference"
+      panelTitle="Small Acts, Big Changes."
+      panelDescription="Be part of something meaningful. Connect with volunteers, support your community, and create a better tomorrow with Kindora."
     >
       <RegisterForm />
     </AuthShell>

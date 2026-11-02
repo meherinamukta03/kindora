@@ -36,7 +36,7 @@ function FormContent({
       <h1 className="text-2xl font-extrabold tracking-tight text-charcoal sm:text-3xl dark:text-charcoal">
         {title}
       </h1>
-      <p className="mt-2 mb-7 text-sm text-charcoal-soft dark:text-charcoal-soft">
+      <p className="mt-2 mb-5 text-sm text-charcoal-soft dark:text-charcoal-soft">
         {subtitle}
       </p>
 
@@ -56,6 +56,9 @@ export default function AuthShell({
   title,
   subtitle,
   centered = false,
+  panelEyebrow,
+  panelTitle,
+  panelDescription,
   children,
 }: {
   image?: string;
@@ -63,6 +66,10 @@ export default function AuthShell({
   title: string;
   subtitle: string;
   centered?: boolean;
+  /** Extra text shown over the photo on the right panel (optional). */
+  panelEyebrow?: string;
+  panelTitle?: string;
+  panelDescription?: string;
   children: React.ReactNode;
 }) {
   // Centered mode — single card, page ke center mein, photo side nahi hota
@@ -80,10 +87,10 @@ export default function AuthShell({
   }
 
   return (
-    <section className="px-4 py-12 sm:px-6 lg:px-8">
+    <section className="px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto grid w-full max-w-5xl overflow-hidden rounded-3xl border border-border bg-card shadow-lg lg:grid-cols-2">
         {/* Form side */}
-        <div className="p-7 sm:p-10">
+        <div className="p-6 sm:p-8">
           <BrandHeader />
           <FormContent title={title} subtitle={subtitle}>
             {children}
@@ -96,14 +103,33 @@ export default function AuthShell({
             <Image src={image} alt={imageAlt ?? ""} fill sizes="50vw" className="object-cover" />
           ) : null}
           <div className="absolute inset-0 bg-forest-dark/40" />
-          <div className="absolute right-0 bottom-0 left-0 p-8">
-            <p className="text-xl font-extrabold text-white">
-              Together we grow, together we serve.
-            </p>
-            <p className="mt-2 text-sm text-white/80">
-              Join 1,200+ volunteers making their communities greener and kinder
-              every month.
-            </p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute right-0 bottom-0 left-0 p-8 text-white">
+            {panelEyebrow ? (
+              <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-green-300">
+                {panelEyebrow}
+              </p>
+            ) : null}
+            {panelTitle ? (
+              <h2 className="mb-4 text-4xl font-bold leading-tight">
+                {panelTitle}
+              </h2>
+            ) : null}
+            {panelDescription ? (
+              <p className="max-w-md text-sm leading-7 text-white/90">
+                {panelDescription}
+              </p>
+            ) : (
+              <>
+                <p className="text-xl font-extrabold">
+                  Together we grow, together we serve.
+                </p>
+                <p className="mt-2 text-sm text-white/80">
+                  Join 1,200+ volunteers making their communities greener and
+                  kinder every month.
+                </p>
+              </>
+            )}
           </div>
         </div>
       </div>

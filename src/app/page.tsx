@@ -7,11 +7,11 @@ import NewsletterSection from "@/components/home/NewsletterSection";
 export default function HomePage() {
   return (
     <>
-      {/* <HeroSection />
-      <FeaturesSection />
+      <HeroSection />
+      {/* <FeaturesSection />
       <FeaturedEvents />
       <GallerySection />
-      <NewsletterSection /> */}
+      <NewsletterSection /> */} 
     </>
   );
 }

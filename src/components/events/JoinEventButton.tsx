@@ -12,7 +12,7 @@ export default function JoinEventButton() {
   };
 
   return (
-    <Button variant="accent" size="lg" onClick={handleJoin} className="w-full sm:w-auto">
+    <Button variant="default" size="lg" onClick={handleJoin} className="w-full sm:w-auto">
       <FontAwesomeIcon icon={faUsers} className="h-4 w-4" />
       Join Event
     </Button>

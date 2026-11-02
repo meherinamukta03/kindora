@@ -13,4 +13,8 @@ export interface Event {
   image: string;
   location: string;
   date: string;
+  userEmail?: string;
+  organizer?: string;
+  organizerTitle?: string;
+  contactEmail?: string;
 }
