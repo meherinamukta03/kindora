@@ -10,12 +10,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Button } from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+
 import Label from "@/components/ui/Label";
 import Select from "@/components/ui/Select";
 import Textarea from "@/components/ui/Textarea";
 import FieldHint from "@/components/ui/FieldHint";
 import { useSession } from "@/lib/auth-client";
+import { Input } from "../ui/Input";
+import Link from "next/link";
 
 export default function CreateEventForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -226,7 +228,7 @@ console.log("User Email:", user?.email);
           />
           Clear Form
         </Button>
-
+<Link href='/manage-events'>
         <Button
           type="submit"
           variant="outline"
@@ -240,6 +242,7 @@ console.log("User Email:", user?.email);
           />
           Submit Event
         </Button>
+        </Link>
       </div>
     </form>
   );

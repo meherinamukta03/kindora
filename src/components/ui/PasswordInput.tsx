@@ -4,7 +4,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "@/lib/utils";
-import Input from "./Input";
+import { Input } from "./Input";
 
 /** Password field with a show/hide visibility toggle. */
 export default function PasswordInput({

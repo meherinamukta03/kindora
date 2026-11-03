@@ -20,6 +20,7 @@ import ManageEventActions from "./ManageEventActions";
 import type { Event, EventType } from "@/types/event";
 import { useSession } from "@/lib/auth-client";
 
+
 const typeIcons: Record<EventType, typeof faLeaf> = {
   Plantation: faLeaf,
   Cleanup: faRecycle,
@@ -43,6 +44,8 @@ function formatDate(value: string) {
 
 /** All events created by the signed-in organizer, shown as cards. */
 export default function ManageEventsGrid() {
+
+ 
   const { data: session, isPending } = useSession();
   const user = session?.user;
 
@@ -54,7 +57,7 @@ export default function ManageEventsGrid() {
 
     const fetchEvents = async () => {
       try {
-        const res = await fetch(process.env.NEXT_PUBLIC_SERVER_BASE_URL!);
+        const res = await fetch(process.env.NEXT_PUBLIC_SERVER_BASE_URL as string );
         const data: Event[] = await res.json();
 
         // Only show events created by this organizer
@@ -112,8 +115,8 @@ export default function ManageEventsGrid() {
     <>
       {/* Count row */}
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-        <p className="flex items-center gap-2 text-sm font-semibold text-charcoal-soft">
-          <FontAwesomeIcon icon={faUsers} className="h-4 w-4 text-accent" />
+        <p className="flex items-center gap-2 text-sm font-semibold text-shadow-black">
+          <FontAwesomeIcon icon={faUsers} className="h-4 w-4  text-shadow-black" />
           You have published {events.length}{" "}
           {events.length === 1 ? "event" : "events"}
         </p>

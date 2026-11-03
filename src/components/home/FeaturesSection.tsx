@@ -1,3 +1,4 @@
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCirclePlus,
@@ -5,6 +6,7 @@ import {
   faClipboardList,
   faLeaf,
 } from "@fortawesome/free-solid-svg-icons";
+
 import SectionHeading from "@/components/shared/SectionHeading";
 import PageContainer from "@/components/shared/PageContainer";
 
@@ -13,25 +15,25 @@ const features = [
     icon: faCirclePlus,
     title: "Create Events",
     description:
-      "Set up a plantation drive, cleanup mission or donation camp in minutes and share it with your community.",
+      "Create community events such as tree plantations, neighborhood cleanups, donation drives and educational activities.",
   },
   {
     icon: faUsers,
     title: "Join Community Activities",
     description:
-      "Browse events near you and sign up to volunteer alongside neighbors who care about the same causes.",
+      "Explore upcoming events and join meaningful activities with volunteers who want to make a difference.",
   },
   {
     icon: faClipboardList,
-    title: "Track Your Participation",
+    title: "Manage Your Participation",
     description:
-      "Keep every event you've joined in one place — dates, locations and impact you made each time.",
+      "View your joined events in one place and keep track of event details, dates and locations.",
   },
   {
     icon: faLeaf,
-    title: "Make a Positive Impact",
+    title: "Support Social Development",
     description:
-      "Every event page shows what your effort achieves, from trees planted to meals packed per session.",
+      "Contribute your time and effort to meaningful community activities and help build a better environment for everyone.",
   },
 ];
 
@@ -42,21 +44,29 @@ export default function FeaturesSection() {
         <SectionHeading
           eyebrow="Why Kindora"
           title="Everything You Need to Give Back"
-          subtitle="From starting an event to celebrating its impact, Kindora keeps the focus on the service — not the paperwork."
+          subtitle="From creating events to joining community activities, Kindora makes volunteering easier and brings people together for positive change."
         />
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="group rounded-2xl border border-border bg-card p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            >
+            
+            className="group rounded-2xl border border-border bg-card p-6 shadow-md transition-all duration-300 ease-in-out hover:-translate-y-3 hover:border-forest hover:shadow-xl dark:hover:border-forest-light">
+              {/* Feature Icon */}
               <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-forest/10 text-forest transition-colors duration-300 group-hover:bg-forest group-hover:text-white dark:bg-forest/20 dark:text-forest-light">
-                <FontAwesomeIcon icon={feature.icon} className="h-5 w-5" />
+                <FontAwesomeIcon
+                  icon={feature.icon}
+                  className="h-5 w-5"
+                />
               </span>
+
+              {/* Feature Title */}
               <h3 className="mb-2 text-lg font-bold text-charcoal dark:text-charcoal">
                 {feature.title}
               </h3>
+
+              {/* Feature Description */}
               <p className="text-sm leading-relaxed text-charcoal-soft dark:text-charcoal-soft">
                 {feature.description}
               </p>

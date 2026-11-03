@@ -8,10 +8,10 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
-      {/* <FeaturesSection />
-      <FeaturedEvents />
+       <FeaturesSection />
+       <FeaturedEvents />
       <GallerySection />
-      <NewsletterSection /> */} 
+      <NewsletterSection />  
     </>
   );
 }

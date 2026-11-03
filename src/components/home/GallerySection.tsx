@@ -6,32 +6,32 @@ import PageContainer from "@/components/shared/PageContainer";
 const galleryItems = [
   {
     image:
-      // "https://images.unsplash.com/photo-1560264280-88b68371db39?w=900&q=80&auto=format&fit=crop",
-      "",
+       "https://images.unsplash.com/photo-1560264280-88b68371db39?w=900&q=80&auto=format&fit=crop",
+      
     alt: "Volunteers planting tree saplings together",
     title: "Planting Hope",
     caption: "Spring plantation week — 600+ native saplings rooted",
   },
   {
     image:
-      // "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=900&q=80&auto=format&fit=crop",
-      "",
+      "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=900&q=80&auto=format&fit=crop",
+      
     alt: "Volunteers preparing food donation packages",
     title: "Giving Back",
     caption: "Monthly food bank packing for 500 households",
   },
   {
     image:
-      // "https://images.unsplash.com/photo-1531554694-7ff75f003945?w=900&q=80&auto=format&fit=crop",
-      "",
+      " https://gemini.google.com/app/974721d2375fcce3",
+      
     alt: "Volunteers cleaning waste at a riverside park",
     title: "Cleaner Tomorrow",
     caption: "Lake belt cleanup — 840 kg of waste removed",
   },
   {
     image:
-      // "https://images.unsplash.com/photo-1582213782179-e0d53f98f3ca?w=900&q=80&auto=format&fit=crop",
-      "",
+       "https://images.unsplash.com/photo-1582213782179-e0d53f98f3ca?w=900&q=80&auto=format&fit=crop",
+      
     alt: "Group of volunteers joining hands and working together",
     title: "Hands Together",
     caption: "Cross-community volunteer weekend camp",
@@ -43,9 +43,8 @@ export default function GallerySection() {
     <section className="py-16 sm:py-20">
       <PageContainer>
         <SectionHeading
-          eyebrow="Gallery"
-          title="Moments From Our Community"
-          subtitle="Snapshots of volunteers in action — gardens planted, wastelands cleaned and kindness packed by the box."
+          title="Explore Our Community Gallery"
+          subtitle="Discover inspiring moments of volunteers working together to create positive changes in their communities."
         />
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">

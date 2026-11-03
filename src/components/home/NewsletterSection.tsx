@@ -4,10 +4,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-// import Button from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+
 import PageContainer from "@/components/shared/PageContainer";
 import { Button } from "../ui/Button";
+import { Input } from "../ui/Input";
 
 /** Design-only newsletter block. Responds with a friendly demo toast. */
 export default function NewsletterSection() {

@@ -12,10 +12,11 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import { signUp } from "@/lib/auth-client";
 
 import { Button } from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+
 import Label from "@/components/ui/Label";
 import FieldHint from "@/components/ui/FieldHint";
 import PasswordInput from "@/components/ui/PasswordInput";
+import { Input } from "../ui/Input";
 
 export default function RegisterForm() {
   const router = useRouter();

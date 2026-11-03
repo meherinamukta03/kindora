@@ -9,12 +9,13 @@ import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 import { Button } from "@/components/ui/Button";
-import Input from "@/components/ui/Input";
+
 import Label from "@/components/ui/Label";
 import FieldHint from "@/components/ui/FieldHint";
 import PasswordInput from "@/components/ui/PasswordInput";
 
 import { signIn } from "@/lib/auth-client";
+import { Input } from "../ui/Input";
 
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
