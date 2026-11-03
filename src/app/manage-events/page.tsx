@@ -25,7 +25,7 @@ export default function ManageEventsPage() {
       <PageContainer className="py-14 sm:py-16">
         {/* Header row */}
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
-          <h2 className="text-2xl font-bold text-charcoal dark:text-charcoal">
+          <h2 className="text-2xl font-bold text-charcoal dark:text-white">
             Your Events
           </h2>
           <Link href="/create-event">

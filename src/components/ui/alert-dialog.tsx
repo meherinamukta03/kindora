@@ -3,7 +3,8 @@
 import * as React from "react"
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog"
 import { cn } from "cn"
-import { Button } from "@base-ui/react"
+// NB: project-এর styled Button — @base-ui/react-এর Button-এ variant/size props নাই
+import { Button } from "@/components/ui/Button"
 
 
 

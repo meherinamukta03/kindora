@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import type { FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,10 +18,10 @@ import Textarea from "@/components/ui/Textarea";
 import FieldHint from "@/components/ui/FieldHint";
 import { useSession } from "@/lib/auth-client";
 import { Input } from "../ui/Input";
-import Link from "next/link";
 
 export default function CreateEventForm() {
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
   // Tomorrow's date
   const tomorrow = new Date();
@@ -67,27 +68,25 @@ console.log("User Email:", user?.email);
 
 
     const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}`, {
-
-
       method: "POST",
       headers: {
-        "COntent-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ ...event, userEmail: user?.email }),
+    });
 
-    })
+    const data = await result.json();
 
- const data = await result.json()
-
-    //console.log("Event Data:", event);
-    if (data.acknowledged) {
-      toast.success("Event-Created successfully!");
+    if (!result.ok || !data.acknowledged) {
+      toast.error(data.message || "Failed to create event. Please try again.");
+      return;
     }
 
-   
+    toast.success("Event created successfully!");
 
- console.log("Event Data:", event);
- console.log(data);
+    // POST সম্পূর্ণ হওয়ার পরেই navigate — আগে Link-এর কারণে insert শেষ হওয়ার
+    // আগেই manage পেজে চলে যেত, ফলে নতুন event দেখা যেত না
+    router.push("/manage-events");
   };
 
   // Clear form
@@ -228,13 +227,11 @@ console.log("User Email:", user?.email);
           />
           Clear Form
         </Button>
-<Link href='/manage-events'>
         <Button
           type="submit"
           variant="outline"
           size="lg"
-        
-      className="border border-forest px-6 py-3 text-base dark:border-forest-light"
+          className="border border-forest px-6 py-3 text-base dark:border-forest-light"
         >
           <FontAwesomeIcon
             icon={faCirclePlus}
@@ -242,7 +239,6 @@ console.log("User Email:", user?.email);
           />
           Submit Event
         </Button>
-        </Link>
       </div>
     </form>
   );

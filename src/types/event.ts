@@ -7,6 +7,7 @@ export type EventType =
 
 export interface Event {
   _id: string;
+  eventId?: string;
   title: string;
   description: string;
   category: EventType;

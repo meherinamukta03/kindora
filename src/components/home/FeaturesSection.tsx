@@ -39,7 +39,7 @@ const features = [
 
 export default function FeaturesSection() {
   return (
-    <section className="py-16 sm:py-20">
+    <section className="py-16 sm:py-20 text-black">
       <PageContainer>
         <SectionHeading
           eyebrow="Why Kindora"

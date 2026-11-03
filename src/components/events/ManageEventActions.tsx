@@ -163,7 +163,7 @@ export default function ManageEventActions({
               </AlertDialogTitle>
 
               <AlertDialogDescription>
-                Are you sure you want to delete ${event.title}?
+                Are you sure you want to delete {event.title}?
                 This action cannot be undone.
               </AlertDialogDescription>
             </AlertDialogHeader>

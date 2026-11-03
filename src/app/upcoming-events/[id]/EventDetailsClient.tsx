@@ -1,9 +1,12 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+
+const SERVER = process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN;
+const JOIN_URL = `${SERVER}/upcomingEvent/joined`;
 
 import {
   MapPin,
@@ -29,6 +32,30 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
   const { data: session, isPending } = useSession();
   const user = session?.user;
 
+  // Archive: check on load whether the logged-in user already joined this event
+  useEffect(() => {
+    if (isPending || !user) return;
+
+    const checkJoined = async () => {
+      try {
+        const res = await fetch(
+          `${SERVER}/joined-events/${encodeURIComponent(user.email)}`
+        );
+        if (!res.ok) return;
+
+        const list = await res.json();
+        const eventId = event.eventId || event._id;
+        setJoined(list.some((j: { eventId?: string; _id?: string }) =>
+          j.eventId === eventId || j._id === eventId
+        ));
+      } catch {
+        // Status check failing should not block the page — leave as join-ready.
+      }
+    };
+
+    checkJoined();
+  }, [isPending, user, event._id, event.eventId]);
+
   // Join Event
   const handleJoin = async () => {
     if (isPending || isJoining) return;
@@ -42,19 +69,16 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
     try {
       setIsJoining(true);
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/joined`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            eventId: event._id,
-            userId: user.id,
-          }),
-        }
-      );
+      const res = await fetch(JOIN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...event,
+          userEmail: user.email,
+        }),
+      });
 
       if (res.ok) {
         setJoined(true);
@@ -70,10 +94,32 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
     }
   };
 
-  // Leave Event
-  const handleLeave = () => {
-    setJoined(false);
-    toast.success("You have left the event.");
+  // Leave Event — actually deletes the joined record on the backend
+  const handleLeave = async () => {
+    if (!user || isJoining) return;
+
+    try {
+      setIsJoining(true);
+
+      const res = await fetch(
+        `${JOIN_URL}?userEmail=${encodeURIComponent(user.email)}&eventId=${encodeURIComponent(
+          event._id
+        )}`,
+        { method: "DELETE" }
+      );
+
+      if (res.ok) {
+        setJoined(false);
+        toast.success("You have left the event.");
+      } else {
+        toast.error("Failed to leave the event. Please try again.");
+      }
+    } catch (error) {
+      console.error("Leave event error:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsJoining(false);
+    }
   };
 
   const formattedDate = new Date(
@@ -116,11 +162,10 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
           {/* Event Status */}
           <div className="absolute top-6 right-6">
             <span
-              className={`rounded-full px-4 py-2 text-xs font-bold backdrop-blur-md ${
-                isUpcoming
+              className={`rounded-full px-4 py-2 text-xs font-bold backdrop-blur-md ${isUpcoming
                   ? "bg-green-500/90 text-white"
                   : "bg-gray-700/90 text-white"
-              }`}
+                }`}
             >
               {isUpcoming ? "UPCOMING EVENT" : "COMPLETED"}
             </span>
@@ -330,11 +375,10 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
                 <div>
                   <p className="text-sm text-gray-500 mb-1">Event Status</p>
                   <p
-                    className={`font-semibold ${
-                      isUpcoming
+                    className={`font-semibold ${isUpcoming
                         ? "text-green-700 dark:text-green-400"
                         : "text-gray-500"
-                    }`}
+                      }`}
                   >
                     {isUpcoming ? "Upcoming" : "Completed"}
                   </p>

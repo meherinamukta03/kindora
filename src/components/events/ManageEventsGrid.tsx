@@ -53,15 +53,26 @@ export default function ManageEventsGrid() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (isPending || !user) return;
+    if (isPending) return;
+
+    // Login থাকলে ওই user-এর নিজের event-গুলো backend থেকেই filter করে আসে
+    if (!user) {
+      setLoading(false);
+      return;
+    }
 
     const fetchEvents = async () => {
       try {
-        const res = await fetch(process.env.NEXT_PUBLIC_SERVER_BASE_URL as string );
-        const data: Event[] = await res.json();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/manage-events/${encodeURIComponent(user.email)}`
+        );
 
-        // Only show events created by this organizer
-        setEvents(data.filter((ev) => ev.userEmail === user.email));
+        if (!res.ok) {
+          throw new Error("Failed to fetch your events");
+        }
+
+        const data: Event[] = await res.json();
+        setEvents(data);
       } catch (error) {
         console.log("Failed to fetch events:", error);
       } finally {

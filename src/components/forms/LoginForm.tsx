@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
 
@@ -17,8 +17,37 @@ import PasswordInput from "@/components/ui/PasswordInput";
 import { signIn } from "@/lib/auth-client";
 import { Input } from "../ui/Input";
 
-export default function LoginForm() {
+// better-auth OAuth error codes → user-friendly messages
+function friendlyOAuthError(code?: string) {
+  switch (code) {
+    case "access_denied":
+      return "Google login was cancelled or denied.";
+    case "state_not_found":
+      return "Google login session expired. Please try again.";
+    case "invalid_callback_request":
+      return "Google login failed unexpectedly. Please try again.";
+    default:
+      return undefined;
+  }
+}
+
+export default function LoginForm({
+  oauthError,
+  oauthErrorDescription,
+}: {
+  oauthError?: string;
+  oauthErrorDescription?: string;
+}) {
   const [loading, setLoading] = useState(false);
+
+  // OAuth callback botvalo hole better-auth ?error= soho redirect kore — ekhane dekhai
+  useEffect(() => {
+    if (!oauthError) return;
+
+    const message =
+      oauthErrorDescription || friendlyOAuthError(oauthError) || "Google login failed. Please try again.";
+    toast.error(message);
+  }, [oauthError, oauthErrorDescription]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,6 +98,8 @@ export default function LoginForm() {
       const result = await signIn.social({
         provider: "google",
         callbackURL: "/",
+        // Fail holei abar login page-e ferot ase (?error=... sathe) — user-friendly message er jonno
+        errorCallbackURL: "/login",
       });
 
       if (result.error) {

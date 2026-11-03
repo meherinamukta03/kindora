@@ -6,7 +6,8 @@ import { cn } from "cn"
 
 
 import { XIcon } from "lucide-react"
-import { Button } from "@base-ui/react"
+// NB: project-এর styled Button — @base-ui/react-এর Button-এ variant/size props নাই
+import { Button } from "@/components/ui/Button"
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
   return <DialogPrimitive.Root data-slot="dialog" {...props} />
