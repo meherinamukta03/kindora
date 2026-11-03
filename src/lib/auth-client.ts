@@ -1,7 +1,13 @@
 import { createAuthClient } from "better-auth/react"
+import { jwtClient } from "better-auth/client/plugins"
 
-// একটাই client — কোনো baseURL দিতে হয় না, same-origin (localhost:3000) এর
-// /api/auth এ better-auth route handler mount করা আছে।
-export const authClient = createAuthClient()
+export const authClient = createAuthClient({
+
+ plugins: [
+    jwtClient() 
+  ]
+
+
+})
 
 export const { signIn, signUp, useSession, signOut } = authClient

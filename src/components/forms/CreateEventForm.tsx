@@ -71,6 +71,7 @@ console.log("User Email:", user?.email);
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authozization:'user loged in'
       },
       body: JSON.stringify({ ...event, userEmail: user?.email }),
     });
@@ -84,8 +85,6 @@ console.log("User Email:", user?.email);
 
     toast.success("Event created successfully!");
 
-    // POST সম্পূর্ণ হওয়ার পরেই navigate — আগে Link-এর কারণে insert শেষ হওয়ার
-    // আগেই manage পেজে চলে যেত, ফলে নতুন event দেখা যেত না
     router.push("/manage-events");
   };
 
