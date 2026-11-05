@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -15,11 +16,11 @@ import {
   faCalendarDays,
   faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
+
 import Badge from "@/components/ui/Badge";
 import ManageEventActions from "./ManageEventActions";
 import type { Event, EventType } from "@/types/event";
-import { useSession } from "@/lib/auth-client";
-
+import { useSession, authClient } from "@/lib/auth-client";
 
 const typeIcons: Record<EventType, typeof faLeaf> = {
   Plantation: faLeaf,
@@ -42,10 +43,7 @@ function formatDate(value: string) {
   }
 }
 
-/** All events created by the signed-in organizer, shown as cards. */
 export default function ManageEventsGrid() {
-
- 
   const { data: session, isPending } = useSession();
   const user = session?.user;
 
@@ -55,24 +53,36 @@ export default function ManageEventsGrid() {
   useEffect(() => {
     if (isPending) return;
 
-    // Login থাকলে ওই user-এর নিজের event-গুলো backend থেকেই filter করে আসে
-    if (!user) {
+    if (!user?.email) {
       setLoading(false);
       return;
     }
 
     const fetchEvents = async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/manage-events/${encodeURIComponent(user.email)}`
-        );
+        setLoading(true);
+
+        const { data, error } = await authClient.token();
+
+        if (error || !data?.token) {
+          throw new Error("Failed to get authentication token");
+        }
+
+
+        const url = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/manage-events/${encodeURIComponent(user.email)}`;
+
+const res = await fetch(url, {
+  headers: {
+    Authorization: `Bearer ${data.token}`,
+  },
+});
 
         if (!res.ok) {
           throw new Error("Failed to fetch your events");
         }
 
-        const data: Event[] = await res.json();
-        setEvents(data);
+        const eventsData: Event[] = await res.json();
+        setEvents(eventsData);
       } catch (error) {
         console.log("Failed to fetch events:", error);
       } finally {
@@ -124,23 +134,23 @@ export default function ManageEventsGrid() {
 
   return (
     <>
-      {/* Count row */}
       <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
         <p className="flex items-center gap-2 text-sm font-semibold text-shadow-black">
-          <FontAwesomeIcon icon={faUsers} className="h-4 w-4  text-shadow-black" />
+          <FontAwesomeIcon
+            icon={faUsers}
+            className="h-4 w-4 text-shadow-black"
+          />
           You have published {events.length}{" "}
           {events.length === 1 ? "event" : "events"}
         </p>
       </div>
 
-      {/* Cards */}
       <div className="grid gap-6 sm:grid-cols-2">
         {events.map((event) => (
           <article
             key={event._id}
             className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
           >
-            {/* Cover */}
             <div className="relative aspect-16/10 overflow-hidden">
               {event.image ? (
                 <Image
@@ -153,7 +163,6 @@ export default function ManageEventsGrid() {
                 />
               ) : null}
 
-              {/* Category badge */}
               <div className="absolute top-3 left-3">
                 <Badge className="bg-white/90 shadow-sm dark:bg-white/90 dark:text-forest">
                   <FontAwesomeIcon
@@ -164,7 +173,6 @@ export default function ManageEventsGrid() {
                 </Badge>
               </div>
 
-              {/* Date badge */}
               <div className="absolute bottom-3 left-3">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[0.7rem] font-semibold text-charcoal shadow-sm">
                   <FontAwesomeIcon
@@ -176,7 +184,6 @@ export default function ManageEventsGrid() {
               </div>
             </div>
 
-            {/* Body */}
             <div className="flex flex-1 flex-col p-5">
               <h3 className="mb-2 line-clamp-1 text-lg font-bold text-charcoal transition-colors group-hover:text-forest dark:text-charcoal">
                 {event.title}
@@ -194,7 +201,6 @@ export default function ManageEventsGrid() {
                 <span className="line-clamp-1">{event.location}</span>
               </p>
 
-              {/* Actions */}
               <div className="mt-auto flex justify-end border-t border-border pt-4">
                 <ManageEventActions event={event} />
               </div>

@@ -36,6 +36,7 @@ import {
 import toast from "react-hot-toast";
 import type { Event } from "@/types/event";
 import { Input } from "@base-ui/react";
+import { authClient } from "@/lib/auth-client";
 
 export default function ManageEventActions({
   event,
@@ -64,11 +65,24 @@ export default function ManageEventActions({
     });
   };
 
+  /** verifyToken-protected routes-এর জন্য Bearer token আনে (manage grid-এর pattern) */
+  const getBearerToken = async () => {
+    const { data, error } = await authClient.token();
+    if (error || !data?.token) return null;
+    return { Authorization: `Bearer ${data.token}` };
+  };
+
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       setSaving(true);
+
+      const tokenHeaders = await getBearerToken();
+      if (!tokenHeaders) {
+        toast.error("Authentication failed. Please login again.");
+        return;
+      }
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/${event._id}`,
@@ -76,6 +90,7 @@ export default function ManageEventActions({
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            ...tokenHeaders,
           },
           body: JSON.stringify(formData),
         }
@@ -100,9 +115,15 @@ export default function ManageEventActions({
     try {
       setDeleting(true);
 
+      const tokenHeaders = await getBearerToken();
+      if (!tokenHeaders) {
+        toast.error("Authentication failed. Please login again.");
+        return;
+      }
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/${event._id}`,
-        { method: "DELETE" }
+        { method: "DELETE", headers: tokenHeaders }
       );
 
       if (!response.ok) {

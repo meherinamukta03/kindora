@@ -2,13 +2,23 @@ import type { Metadata } from "next";
 import PageContainer from "@/components/shared/PageContainer";
 import PageHeader from "@/components/shared/PageHeader";
 import CreateEventForm from "@/components/forms/CreateEventForm";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Create Event — Kindora",
   description: "Organize a community service event on Kindora.",
 };
 
-export default function CreateEventPage() {
+export default async function CreateEventPage() {
+
+const jwtToken = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const token = jwtToken?.token;
+
+console.log(token,jwtToken)
+
   return (
     <>
       <PageHeader

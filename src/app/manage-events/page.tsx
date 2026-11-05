@@ -7,13 +7,25 @@ import { Button } from "@/components/ui/Button";
 import ManageEventsGrid from "@/components/events/ManageEventsGrid";
 
 import Link from "next/link";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Manage Events — Kindora",
   description: "Update or remove the community events you have created.",
 };
 
-export default function ManageEventsPage() {
+export default async function ManageEventsPage() {
+
+
+
+
+  const jwtToken = await auth.api.getToken({
+      headers: await headers(),
+    });
+    const token = jwtToken?.token;
+  
+  console.log(token,jwtToken)
   return (
     <>
       <PageHeader

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,7 +11,7 @@ import {
   faTicket,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { useSession } from "@/lib/auth-client";
+import { useSession,authClient } from "@/lib/auth-client";
 
 type JoinedEvent = {
   _id?: string;
@@ -42,14 +42,34 @@ export default function JoinedEventsPage() {
       return;
     }
 
+
+
     const fetchJoinedEvents = async () => {
+
+
+const {data,error}=await authClient.token()
+const token=data?.token
+console.log(token)
+
+
+
+
+
+
+
+
       try {
         setLoading(true);
         setError("");
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/joined-events/${encodeURIComponent(userEmail)}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/joined-events/${encodeURIComponent(userEmail)}`
-        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch joined events");
@@ -98,7 +118,7 @@ export default function JoinedEventsPage() {
   return (
     <main className="min-h-screen bg-background">
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {/* Page Heading */}
+    
         <div className="mb-10">
           <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-forest">
             <FontAwesomeIcon icon={faTicket} />

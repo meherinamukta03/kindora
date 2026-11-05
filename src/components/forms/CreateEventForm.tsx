@@ -16,8 +16,10 @@ import Label from "@/components/ui/Label";
 import Select from "@/components/ui/Select";
 import Textarea from "@/components/ui/Textarea";
 import FieldHint from "@/components/ui/FieldHint";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { Input } from "../ui/Input";
+
+
 
 export default function CreateEventForm() {
   const formRef = useRef<HTMLFormElement>(null);
@@ -67,19 +69,35 @@ console.log("User Email:", user?.email);
     const event = Object.fromEntries(formData.entries());
 
 
-    const result = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}`, {
+
+//     const {token} =await auth.api.getToken({
+
+// headers: await headers()
+
+
+//     })
+
+const {data,error}=await authClient.token()
+const token=data?.token
+console.log(token)
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authozization:'user loged in'
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify({ ...event, userEmail: user?.email }),
     });
 
-    const data = await result.json();
+    const result = await res.json();
 
-    if (!result.ok || !data.acknowledged) {
-      toast.error(data.message || "Failed to create event. Please try again.");
+
+console.log(result)
+
+
+    if (!result.insertedId) {
+      toast.error(result.message || "Failed to create event. Please try again.");
       return;
     }
 

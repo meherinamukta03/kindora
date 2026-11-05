@@ -187,7 +187,7 @@ export default function LoginForm({
 
       {/* Register Link */}
       <p className="text-center text-sm text-charcoal-soft">
-       Don't have an account?
+       Do not  have an account?
         <Link
           href="/register"
           className="font-semibold text-forest hover:text-black dark:text-forest-light"

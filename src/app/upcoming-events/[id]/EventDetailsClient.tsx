@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSession } from "@/lib/auth-client";
+import { useSession, authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 const SERVER = process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN;
@@ -38,8 +38,13 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
 
     const checkJoined = async () => {
       try {
+        // /joined-events/:email এখন verifyToken-protected — JWT লাগবে
+        const { data, error } = await authClient.token();
+        if (error || !data?.token) return;
+
         const res = await fetch(
-          `${SERVER}/joined-events/${encodeURIComponent(user.email)}`
+          `${SERVER}/joined-events/${encodeURIComponent(user.email)}`,
+          { headers: { Authorization: `Bearer ${data.token}` } }
         );
         if (!res.ok) return;
 
@@ -69,10 +74,17 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
     try {
       setIsJoining(true);
 
+      const { data, error } = await authClient.token();
+      if (error || !data?.token) {
+        toast.error("Authentication failed. Please login again.");
+        return;
+      }
+
       const res = await fetch(JOIN_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${data.token}`,
         },
         body: JSON.stringify({
           ...event,
@@ -101,11 +113,20 @@ const EventDetailsClient = ({ event }: { event: Event }) => {
     try {
       setIsJoining(true);
 
+      const { data, error } = await authClient.token();
+      if (error || !data?.token) {
+        toast.error("Authentication failed. Please login again.");
+        return;
+      }
+
       const res = await fetch(
         `${JOIN_URL}?userEmail=${encodeURIComponent(user.email)}&eventId=${encodeURIComponent(
           event._id
         )}`,
-        { method: "DELETE" }
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${data.token}` },
+        }
       );
 
       if (res.ok) {
