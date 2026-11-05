@@ -6,7 +6,7 @@ import PageContainer from "@/components/shared/PageContainer";
 const galleryItems = [
   {
     image:
-       "https://images.unsplash.com/photo-1560264280-88b68371db39?w=900&q=80&auto=format&fit=crop",
+       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ43MUOWzY_4uzQkAsd_1x8oOIT_B7UPq00VczRXwnwojelsg0cnAC7s5w&s=10",
       
     alt: "Volunteers planting tree saplings together",
     title: "Planting Hope",
@@ -14,7 +14,7 @@ const galleryItems = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?w=900&q=80&auto=format&fit=crop",
+      "https://images.stockcake.com/public/b/f/5/bf52298d-8c41-46c6-bed4-334fe08d67da_large/volunteers-packing-food-stockcake.jpg",
       
     alt: "Volunteers preparing food donation packages",
     title: "Giving Back",
@@ -22,7 +22,7 @@ const galleryItems = [
   },
   {
     image:
-      " https://gemini.google.com/app/974721d2375fcce3",
+      " https://thumbs.dreamstime.com/b/kpps-voting-organizing-group-planting-trees-kpps-voting-organizing-group-planting-trees-inauguration-305832748.jpg",
       
     alt: "Volunteers cleaning waste at a riverside park",
     title: "Cleaner Tomorrow",
@@ -30,7 +30,7 @@ const galleryItems = [
   },
   {
     image:
-       "https://images.unsplash.com/photo-1582213782179-e0d53f98f3ca?w=900&q=80&auto=format&fit=crop",
+       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlRcMI9WAjAAVVTGninYWMb4z-icykk4HLvmagYkG64Q&s=10",
       
     alt: "Group of volunteers joining hands and working together",
     title: "Hands Together",
