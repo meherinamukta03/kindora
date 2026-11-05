@@ -1,28 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import {
   faLocationDot,
   faMagnifyingGlass,
-  faCalendarDays,
 } from "@fortawesome/free-solid-svg-icons";
 
 import PageContainer from "@/components/shared/PageContainer";
 import { Button } from "@/components/ui/Button";
-
-interface Event {
-  _id: string;
-  title: string;
-  description?: string;
-  location: string;
-  date?: string;
-  image?: string;
-}
+import EventCard from "@/components/events/EventCard";
+import { Event } from "@/types/event";
 
 const cities = [
   "Cumilla",
@@ -41,48 +30,43 @@ export default function FindEventsNearYou() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
-const handleFindEvents = async () => {
-  if (!city) {
-    toast.error("Please select your city.");
-    return;
-  }
 
-  try {
-    setLoading(true);
-    setSearched(true);
-    setEvents([]);
-
-    const apiUrl = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/events-by-city/${encodeURIComponent(city)}`;
-
-    console.log("API URL:", apiUrl);
-
-    const response = await fetch(apiUrl);
-
-    console.log("Response Status:", response.status);
-
-    if (!response.ok) {
-      throw new Error("Failed to fetch events");
+  const handleFindEvents = async () => {
+    if (!city) {
+      toast.error("Please select your city.");
+      return;
     }
 
-    const data: Event[] = await response.json();
+    try {
+      setLoading(true);
+      setSearched(true);
+      setEvents([]);
 
-    console.log("Fetched Events:", data);
+      const apiUrl = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/events-by-city/${encodeURIComponent(city)}`;
 
-    setEvents(data);
+      const response = await fetch(apiUrl, {
+        cache: "no-store",
+      });
 
-  } catch (error) {
-    console.error("Fetch Error:", error);
-    toast.error("Could not find events. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+      if (!response.ok) {
+        throw new Error("Failed to fetch events");
+      }
+
+      const data: Event[] = await response.json();
+
+      setEvents(data);
+    } catch (error) {
+      console.error("Fetch Error:", error);
+      toast.error("Could not find events. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="py-16 sm:py-20">
       <PageContainer>
         <div className="mx-auto max-w-4xl">
-
           {/* Heading */}
           <div className="mb-8 text-center">
             <span className="mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/20 text-forest">
@@ -100,7 +84,6 @@ const handleFindEvents = async () => {
 
           {/* Search Box */}
           <div className="flex flex-col gap-3 rounded-2xl border border-forest/10 bg-white p-4 shadow-sm sm:flex-row">
-
             <div className="relative flex-1">
               <FontAwesomeIcon
                 icon={faLocationDot}
@@ -109,7 +92,11 @@ const handleFindEvents = async () => {
 
               <select
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={(e) => {
+                  setCity(e.target.value);
+                  setSearched(false);
+                  setEvents([]);
+                }}
                 className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-charcoal outline-none focus:border-forest"
               >
                 <option value="">Select your city</option>
@@ -131,15 +118,19 @@ const handleFindEvents = async () => {
                 icon={faMagnifyingGlass}
                 className="mr-2"
               />
-
               {loading ? "Searching..." : "Find Events"}
             </Button>
           </div>
 
           {/* Search Results */}
+          {loading && (
+            <p className="mt-10 text-center text-charcoal-soft">
+              Searching events...
+            </p>
+          )}
+
           {searched && !loading && (
             <div className="mt-10">
-
               <h3 className="mb-5 text-xl font-bold text-forest">
                 Events in {city}
               </h3>
@@ -160,72 +151,25 @@ const handleFindEvents = async () => {
                   </p>
                 </div>
               ) : (
-                <div className="grid gap-6 sm:grid-cols-2">
-                  {events.map((event) => (
-                    <div
-                      key={event._id}
-                      className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md"
-                    >
-                      {event.image && (
-                        <div className="relative h-48 w-full">
-                          <Image
-                            src={event.image}
-                            alt={event.title}
-                            fill
-                            className="object-cover"
-                            unoptimized
-                          />
-                        </div>
-                      )}
+                <>
+                  <p className="mb-5 text-sm text-charcoal-soft">
+                    {events.length} events found in {city}
+                  </p>
 
-                      <div className="p-5">
-                        <h4 className="text-lg font-bold text-forest">
-                          {event.title}
-                        </h4>
-
-                        {event.description && (
-                          <p className="mt-2 line-clamp-2 text-sm text-charcoal-soft">
-                            {event.description}
-                          </p>
-                        )}
-
-                        <div className="mt-4 flex flex-wrap gap-4 text-sm text-charcoal-soft">
-                          <span>
-                            <FontAwesomeIcon
-                              icon={faLocationDot}
-                              className="mr-2 text-forest"
-                            />
-                            {event.location}
-                          </span>
-
-                          {event.date && (
-                            <span>
-                              <FontAwesomeIcon
-                                icon={faCalendarDays}
-                                className="mr-2 text-forest"
-                              />
-                              {event.date}
-                            </span>
-                          )}
-                        </div>
-
-                        <Link
-                          href={`/upcoming-events/${event._id}`}
-                          className="mt-5 inline-block font-semibold text-forest hover:underline"
-                        >
-                          View Details →
-                        </Link>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                  <div className="grid gap-6 sm:grid-cols-2">
+                    {events.map((event) => (
+                      <EventCard
+                        key={event._id}
+                        event={event}
+                      />
+                    ))}
+                  </div>
+                </>
               )}
-
             </div>
           )}
-
         </div>
       </PageContainer>
     </section>
   );
-}
+} 
