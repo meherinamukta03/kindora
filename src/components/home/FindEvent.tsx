@@ -54,7 +54,7 @@ export default function FindEventsNearYou() {
       setEvents([]);
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events-by-location/${encodeURIComponent(city)}`
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/${encodeURIComponent(city)}`
       );
 
       if (!response.ok) {
