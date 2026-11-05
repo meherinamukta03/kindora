@@ -19,28 +19,12 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
     },
-
-    // Google OAuth — only wired up when credentials exist in .env,
-    // so the dev server keeps working before they are added.
-    // socialProviders: {
-    //     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
-    //         ? {
-    //               google: {
-    //                   clientId: process.env.GOOGLE_CLIENT_ID,
-    //                   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    //               },
-    //           }
-    //         : {}),
-    // },
-
-    // Let Google sign-in link to an existing email/password account with the
-    // same email (that account is created without email verification).
-    // account: {
-    //     accountLinking: {
-    //         trustedProviders: ["google"],
-    //         requireLocalEmailVerified: false,
-    //     },
-    // },
+socialProviders: {
+  google: {
+    clientId: process.env.GOOGLE_CLIENT_ID as string,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET as string ,
+  },
+},
 
 
      plugins: [
