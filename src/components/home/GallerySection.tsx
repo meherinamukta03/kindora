@@ -6,7 +6,7 @@ import PageContainer from "@/components/shared/PageContainer";
 const galleryItems = [
   {
     image:
-       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ43MUOWzY_4uzQkAsd_1x8oOIT_B7UPq00VczRXwnwojelsg0cnAC7s5w&s=10",
+       "https://thumbs.dreamstime.com/b/kpps-voting-organizing-group-planting-trees-kpps-voting-organizing-group-planting-trees-inauguration-305832748.jpg",
       
     alt: "Volunteers planting tree saplings together",
     title: "Planting Hope",
@@ -22,17 +22,16 @@ const galleryItems = [
   },
   {
     image:
-      " https://thumbs.dreamstime.com/b/kpps-voting-organizing-group-planting-trees-kpps-voting-organizing-group-planting-trees-inauguration-305832748.jpg",
-      
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR66hCIkHnzMZMYo6BT47YS4yeX1AsM8Z22YGYXuzjrPw&s=10",
     alt: "Volunteers cleaning waste at a riverside park",
     title: "Cleaner Tomorrow",
     caption: "Lake belt cleanup — 840 kg of waste removed",
   },
   {
     image:
-       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlRcMI9WAjAAVVTGninYWMb4z-icykk4HLvmagYkG64Q&s=10",
+       "https://static1.straitstimes.com.sg/s3fs-public/articles/2022/05/25/ads-donation-25052022.jpg?VersionId=1xpvD7R2qg3X6MixapmEO..MLyaTeGR8",
       
-    alt: "Group of volunteers joining hands and working together",
+    alt: "Group of volunteers joining donation of blood and working together",
     title: "Hands Together",
     caption: "Cross-community volunteer weekend camp",
   },
