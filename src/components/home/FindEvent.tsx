@@ -41,36 +41,42 @@ export default function FindEventsNearYou() {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
+const handleFindEvents = async () => {
+  if (!city) {
+    toast.error("Please select your city.");
+    return;
+  }
 
-  const handleFindEvents = async () => {
-    if (!city) {
-      toast.error("Please select your city.");
-      return;
+  try {
+    setLoading(true);
+    setSearched(true);
+    setEvents([]);
+
+    const apiUrl = `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/events-by-city/${encodeURIComponent(city)}`;
+
+    console.log("API URL:", apiUrl);
+
+    const response = await fetch(apiUrl);
+
+    console.log("Response Status:", response.status);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch events");
     }
 
-    try {
-      setLoading(true);
-      setSearched(true);
-      setEvents([]);
+    const data: Event[] = await response.json();
 
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL_MAIN}/events-by-city/${encodeURIComponent(city)}`
-      );
+    console.log("Fetched Events:", data);
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch events");
-      }
+    setEvents(data);
 
-      const data: Event[] = await response.json();
-
-      setEvents(data);
-    } catch (error) {
-      console.error(error);
-      toast.error("Could not find events. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (error) {
+    console.error("Fetch Error:", error);
+    toast.error("Could not find events. Please try again.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <section className="py-16 sm:py-20">
